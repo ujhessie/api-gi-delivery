@@ -14,3 +14,5 @@ app.use(express.json());
 app.use("/", productsRoute);
 
 app.listen(PORT, console.log(`Servidor rodando em http://localhost:${PORT}`));
+
+
