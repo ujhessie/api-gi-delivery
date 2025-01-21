@@ -4,7 +4,7 @@ import {
     findAllService,
     findByIdService,
     updateService,
-    ereaseService
+    ereaseService,
 } from "../services/product.service.js";
 
 export const create = async (req, res) => {
@@ -42,10 +42,6 @@ export const findById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send({ message: "ID Inválido" });
-        }
-
         const product = await findByIdService(id);
 
         res.status(200).send(product);
@@ -60,13 +56,9 @@ export const update = async (req, res) => {
 
         const { name, price, imgUrl } = req.body;
 
+        // vale a pena criar um middleware para isto?
         if (!name || !price || !imgUrl || !id) {
             return res.status(400).send("Submmit all fields for update");
-        }
-
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            // Verificando se o id é um id válido
-            return res.status(400).send();
         }
 
         const oldProduct = await findByIdService(id);
@@ -89,16 +81,14 @@ export const erease = async (req, res) => {
     try {
         const { id } = req.params;
 
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send("Submmit a valid ID");
-        }
-
         const oldProduct = await findByIdService(id);
 
         await ereaseService(id);
 
-
-        res.status(200).send("Product deleted successfull");
+        res.status(200).send({
+            message: "Product deleted successfull",
+            oldProduct,
+        });
     } catch (error) {
         res.send({ message: "Erro", erro: error.message });
     }
