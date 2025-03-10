@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
-    findAll,
-    create,
-    findById,
-    update,
-    erease,
+  findAll,
+  create,
+  findById,
+  update,
+  erease,
 } from "../controllers/products.controller.js";
 import { validId } from "../middlewares/global.middlewares.js";
 
