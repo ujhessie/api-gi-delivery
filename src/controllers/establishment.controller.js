@@ -8,9 +8,9 @@ import {
 
 export const createEstablishment = async (req, res) => {
   try {
-    const { name, username } = req.body;
+    const { name, username, password } = req.body;
 
-    if (!name || !username) {
+    if (!name || !username || !password) {
       return res.status(400).send({
         message:
           "Por favor, envie um nome e username válido. O username deve ser único.",
@@ -55,9 +55,9 @@ export const updateEstablishment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { name, username } = req.body;
+    const { name, username, password } = req.body;
 
-    if (!name || !username) {
+    if (!name || !username || !password) {
       return res
         .status(400)
         .send("Tá faltando algum campo aí. Envie o name e o username.");
@@ -68,7 +68,8 @@ export const updateEstablishment = async (req, res) => {
     const newEstablishment = await updateEstablishimentService(
       id,
       name,
-      username
+      username,
+      password
     );
 
     res.status(200).send({
@@ -89,40 +90,22 @@ export const ereaseEstablishment = async (req, res) => {
 
     const establishment = await findByIdEstablishmentService(id);
 
-
-    if(!establishment) {
-      return res.status(400).send("Não foi possível localizar este estabelecimento")
+    if (!establishment) {
+      return res
+        .status(400)
+        .send("Não foi possível localizar este estabelecimento");
     }
 
     await deleteEstablishment(id);
 
-    res
-      .status(200)
-      .send({
-        message: "Estabelecimento deletado",
-        establishment: establishment,
-      });
+    res.status(200).send({
+      message: "Estabelecimento deletado",
+      establishment: establishment,
+    });
   } catch (error) {
     res.status(400).send({
       message: "Erro ao tentar deletar o estabelecimento",
-      error: error.message
+      error: error.message,
     });
   }
 };
-
-// export const erease = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-
-//         const oldProduct = await findByIdService(id);
-
-//         await ereaseService(id);
-
-//         res.status(200).send({
-//             message: "Product deleted successfull",
-//             oldProduct,
-//         });
-//     } catch (error) {
-//         res.send({ message: "Erro", erro: error.message });
-//     }
-// };

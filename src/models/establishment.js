@@ -9,7 +9,8 @@ const ProductSchema = new mongoose.Schema({
 const EstablishmentSchema = new mongoose.Schema({
   name: { type: String, required: true },
   username: { type: String, required: true, unique: true }, // A opção de 'unique' serve para informar que o campo deve ser único no banco de dados. E como eu posso tratar a validação dessa configuração?
-  products: [ProductSchema],
+  password: { type: String, required: true },
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
 });
 
 const Establishment = mongoose.model("Establishment", EstablishmentSchema);
