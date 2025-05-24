@@ -13,11 +13,11 @@ import { validId } from "../middlewares/global.middlewares.js";
 
 const router = Router();
 
-router.get("/", findAllEstablishment);
-router.get("/:id", validId, findByIdEstablishment);
-router.post("/", createEstablishment);
-router.patch("/:id", validId, updateEstablishment);
-router.delete("/:id",validId, ereaseEstablishment)
+  // router.get("/", findAllEstablishment);
+  // router.get("/:id", validId, findByIdEstablishment);
+  // router.post("/", createEstablishment);
+  // router.patch("/:id", validId, updateEstablishment);
+  // router.delete("/:id",validId, ereaseEstablishment)
 
 
 // router.get("/", findAll);
